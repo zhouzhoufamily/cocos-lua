@@ -1,0 +1,18 @@
+# Ignore config
+
+.DS_Store
+
+# vscode
+**/.vscode/
+
+# visual studio
+**/.vs/
+*.sdf
+*.suo
+**/Debug.win32/
+
+cocos2d/cocos/platform/android/libcocos2dx/build/
+cocos2d/cocos/platform/android/libcocos2dx/libcocos2dx.iml
+
+# cocos studio: image plist.
+*.Dir/
