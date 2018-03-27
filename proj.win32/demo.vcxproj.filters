@@ -10,6 +10,24 @@
     <Filter Include="Classes">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\scene">
+      <UniqueIdentifier>{070fdd83-66e7-47b2-85da-4ca09c6fbfc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ui">
+      <UniqueIdentifier>{d16ac8a1-45ff-4c52-84b6-de08adf4e46c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\network">
+      <UniqueIdentifier>{849fd725-560b-4c1a-90a7-be7e8fb2ff45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\sdk">
+      <UniqueIdentifier>{938c3730-7c5b-43a2-ba8c-84b7305547d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\base">
+      <UniqueIdentifier>{17666bf5-1b11-4d25-a4f1-d2fa1546bb38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\controll">
+      <UniqueIdentifier>{0f64e345-576b-4e3f-8e26-831869cc67e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,6 +39,9 @@
     <ClCompile Include="..\Classes\HelloWorldScene.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\base\ZZWebLayer.cpp">
+      <Filter>Classes\base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -31,6 +52,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\HelloWorldScene.h">
       <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\base\ZZWebLayer.h">
+      <Filter>Classes\base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

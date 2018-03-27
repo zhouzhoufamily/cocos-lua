@@ -25,6 +25,10 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 
+#include "cocos\ui\CocosGUI.h"
+
+#include "base\ZZWebLayer.h"
+
 USING_NS_CC;
 
 Scene* HelloWorld::createScene()
@@ -78,7 +82,7 @@ bool HelloWorld::init()
     // create menu, it's an autorelease object
     auto menu = Menu::create(closeItem, NULL);
     menu->setPosition(Vec2::ZERO);
-    this->addChild(menu, 1);
+    this->addChild(menu, 10);
 
     /////////////////////////////
     // 3. add your codes below...
@@ -115,9 +119,51 @@ bool HelloWorld::init()
         // add the sprite as a child to this layer
         this->addChild(sprite, 0);
     }
+
+	/*auto app = Application::getInstance();
+	app->openURL("http://www.baidu.com");*/
+
+	auto listener = EventListenerTouchOneByOne::create();
+
+	listener->onTouchBegan = [=](Touch* touch, Event* event) {
+		return true;
+	};
+
+	listener->onTouchEnded = [=](Touch* touch, Event* event) {
+		CCLOG("try open web");
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+		{
+			if (this->getChildByTag(10))
+			{
+				this->getChildByTag(10)->removeFromParent();
+			}
+
+			//auto view = cocos2d::experimental::ui::WebView::create();
+			//view->setContentSize(visibleSize);
+			//view->loadURL("http://www.baidu.com");
+			////view->setScalesPageToFit(true);
+			//view->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+			//this->addChild(view, 1, 10);
+
+			//view->setOnDidFinishLoading([](cocos2d::experimental::ui::WebView *sender, const std::string &url) {
+			//	CCLOG("open finish");
+			//});
+			auto webLayer = ZZWebLayer::create();
+			webLayer->loadURL("http://www.baidu.com");
+			webLayer->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+			this->addChild(webLayer, 1, 10);
+			webLayer->getWebView()->setOnDidFinishLoading([](cocos2d::experimental::ui::WebView *sender, const std::string &url) {
+				CCLOG("ZZWebLayer:: open finish");
+			});
+		}
+#else
+#endif
+	};
+
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
     return true;
 }
-
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {
