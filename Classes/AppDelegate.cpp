@@ -23,10 +23,16 @@
  ****************************************************************************/
 
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
+//#include "HelloWorldScene.h"
+#include "base/CCScriptSupport.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_controller_auto.hpp"
+#include "scripting/lua-bindings/manual/controller/lua_cocos2dx_controller_manual.hpp"
+//register lua module
+#include "scripting/lua-bindings/manual/lua_module_register.h"
 
-// #define USE_AUDIO_ENGINE 1
-// #define USE_SIMPLE_AUDIO_ENGINE 1
+#define USE_AUDIO_ENGINE 1
+//#define USE_SIMPLE_AUDIO_ENGINE 1
 
 #if USE_AUDIO_ENGINE && USE_SIMPLE_AUDIO_ENGINE
 #error "Don't use AudioEngine and SimpleAudioEngine at the same time. Please just select one in your game!"
@@ -77,53 +83,81 @@ static int register_all_packages()
     return 0; //flag for packages manager
 }
 
-bool AppDelegate::applicationDidFinishLaunching() {
-    // initialize director
-    auto director = Director::getInstance();
-    auto glview = director->getOpenGLView();
-    if(!glview) {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        glview = GLViewImpl::createWithRect("demo", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
-#else
-        glview = GLViewImpl::create("demo");
+//bool AppDelegate::applicationDidFinishLaunching() {
+//    // initialize director
+//    auto director = Director::getInstance();
+//    auto glview = director->getOpenGLView();
+//    if(!glview) {
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+//        glview = GLViewImpl::createWithRect("demo", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
+//#else
+//        glview = GLViewImpl::create("demo");
+//#endif
+//        director->setOpenGLView(glview);
+//    }
+//
+//    // turn on display FPS
+//    director->setDisplayStats(true);
+//
+//    // set FPS. the default value is 1.0/60 if you don't call this
+//    director->setAnimationInterval(1.0f / 60);
+//
+//    // Set the design resolution
+//    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
+//    auto frameSize = glview->getFrameSize();
+//    // if the frame's height is larger than the height of medium size.
+//    if (frameSize.height > mediumResolutionSize.height)
+//    {        
+//        director->setContentScaleFactor(MIN(largeResolutionSize.height/designResolutionSize.height, largeResolutionSize.width/designResolutionSize.width));
+//    }
+//    // if the frame's height is larger than the height of small size.
+//    else if (frameSize.height > smallResolutionSize.height)
+//    {        
+//        director->setContentScaleFactor(MIN(mediumResolutionSize.height/designResolutionSize.height, mediumResolutionSize.width/designResolutionSize.width));
+//    }
+//    // if the frame's height is smaller than the height of medium size.
+//    else
+//    {        
+//        director->setContentScaleFactor(MIN(smallResolutionSize.height/designResolutionSize.height, smallResolutionSize.width/designResolutionSize.width));
+//    }
+//
+//    register_all_packages();
+//
+//    // create a scene. it's an autorelease object
+//    auto scene = HelloWorld::createScene();
+//
+//    // run
+//    director->runWithScene(scene);
+//
+//    return true;
+//}
+
+bool AppDelegate::applicationDidFinishLaunching()
+{
+	LuaEngine* engine = LuaEngine::getInstance();
+	ScriptEngineManager::getInstance()->setScriptEngine(engine);
+	LuaStack* stack = engine->getLuaStack();
+	lua_State* L = stack->getLuaState();
+
+	lua_module_register(L);
+
+	register_all_packages();
+
+	FileUtils::getInstance()->addSearchPath("src");//lua code
+	FileUtils::getInstance()->addSearchPath("res");//resources
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID ||CC_TARGET_PLATFORM == CC_PLATFORM_IOS )
+	//lua_getglobal(L, "_G");
+	//if (lua_istable(L, -1))//stack:...,_G,
+	//{
+	//	register_all_cocos2dx_controller(L);
+	//	register_all_cocos2dx_controller_manual(L);
+	//}
+	//lua_pop(L, 1);//statck:...
 #endif
-        director->setOpenGLView(glview);
-    }
+	engine->executeString("require 'src/main.lua'");
 
-    // turn on display FPS
-    director->setDisplayStats(true);
-
-    // set FPS. the default value is 1.0/60 if you don't call this
-    director->setAnimationInterval(1.0f / 60);
-
-    // Set the design resolution
-    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
-    auto frameSize = glview->getFrameSize();
-    // if the frame's height is larger than the height of medium size.
-    if (frameSize.height > mediumResolutionSize.height)
-    {        
-        director->setContentScaleFactor(MIN(largeResolutionSize.height/designResolutionSize.height, largeResolutionSize.width/designResolutionSize.width));
-    }
-    // if the frame's height is larger than the height of small size.
-    else if (frameSize.height > smallResolutionSize.height)
-    {        
-        director->setContentScaleFactor(MIN(mediumResolutionSize.height/designResolutionSize.height, mediumResolutionSize.width/designResolutionSize.width));
-    }
-    // if the frame's height is smaller than the height of medium size.
-    else
-    {        
-        director->setContentScaleFactor(MIN(smallResolutionSize.height/designResolutionSize.height, smallResolutionSize.width/designResolutionSize.width));
-    }
-
-    register_all_packages();
-
-    // create a scene. it's an autorelease object
-    auto scene = HelloWorld::createScene();
-
-    // run
-    director->runWithScene(scene);
-
-    return true;
+	return true;
 }
 
 // This function will be called when the app is inactive. Note, when receiving a phone call it is invoked.

@@ -28,6 +28,9 @@
     <Filter Include="Classes\controll">
       <UniqueIdentifier>{0f64e345-576b-4e3f-8e26-831869cc67e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\manager">
+      <UniqueIdentifier>{5707740e-a0aa-4d0a-97a7-e322aa6cd909}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -36,12 +39,6 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\base\ZZWebLayer.cpp">
-      <Filter>Classes\base</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -49,12 +46,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\HelloWorldScene.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\base\ZZWebLayer.h">
-      <Filter>Classes\base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
