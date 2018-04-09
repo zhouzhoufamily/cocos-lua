@@ -1,7 +1,8 @@
+local MainScene = class("MainScene", function()
+    return display.newScene("MainScene")
+end)
 
-local MainScene = class("MainScene", cc.load("mvc").ViewBase)
-
-function MainScene:onCreate()
+function MainScene:ctor()
     -- add background image
     display.newSprite("HelloWorld.png")
         :move(display.center)
@@ -12,8 +13,14 @@ function MainScene:onCreate()
         :move(display.cx, display.cy + 200)
         :addTo(self)
 
-        ccexp.AudioEngine:play2d("sounds/bg.mp3", true);
+        -- ccexp.AudioEngine:play2d("sounds/bg.mp3", true);
 
+end
+
+function MainScene:onEnter()
+end
+
+function MainScene:onExit()
 end
 
 return MainScene

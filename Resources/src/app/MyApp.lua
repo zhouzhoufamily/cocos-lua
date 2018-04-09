@@ -1,8 +1,13 @@
+local AppBase = require("app.base.AppBase")
+local MyApp = class("MyApp", AppBase)
 
-local MyApp = class("MyApp", cc.load("mvc").AppBase)
+function MyApp:ctor()
+    MyApp.super.ctor(self)
+end
 
-function MyApp:onCreate()
-    math.randomseed(os.time())
+function MyApp:run()
+    self:enterScene("TestScene")
+    -- self:enterScene("MainScene")
 end
 
 return MyApp
