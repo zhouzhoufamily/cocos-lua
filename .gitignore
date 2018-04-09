@@ -10,6 +10,7 @@
 *.sdf
 *.suo
 **/Debug.win32/
+**/Release.win32/
 
 cocos2d/cocos/platform/android/libcocos2dx/build/
 cocos2d/cocos/platform/android/libcocos2dx/libcocos2dx.iml
