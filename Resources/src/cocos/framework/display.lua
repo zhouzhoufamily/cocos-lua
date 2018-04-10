@@ -233,6 +233,7 @@ function display.newScene(name, params)
     else
         scene = cc.Scene:createWithPhysics()
     end
+    scene:enableNodeEvents()
     scene.name_ = string.format("%s:%d", name or "<unknown-scene>", sceneIndex)
 
     if params.transition then
