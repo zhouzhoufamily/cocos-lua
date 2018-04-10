@@ -1,26 +1,46 @@
-local LoadingScene = class("LoadingScene", function()
-    return display.newScene("LoadingScene")
-end)
+local BaseScene = require "app.scenes.BaseScene"
+
+local LoadingScene = class("LoadingScene", BaseScene)
 
 function LoadingScene:ctor()
+    -- 父类方法实现
+    if self.super then
+        self.super.ctor(self)
+    end
+    -- 自己方法实现
+    self:createScene()
+
+end
+
+function LoadingScene:createScene( ... )
     -- add background image
-    display.newSprite("HelloWorld.png")
-        :move(display.center)
+    display.newLayer(cc.c4b(87, 250, 255, 180))
         :addTo(self)
 
-    -- add HelloWorld label
-    cc.Label:createWithSystemFont("Test Scene", "Arial", 40)
-        :move(display.cx, display.cy + 200)
-        :addTo(self)
-
-    cc.Button:create
-        -- ccexp.AudioEngine:play2d("sounds/bg.mp3", true);
+    -- add animation
+    ccs.ArmatureDataManager:getInstance():addArmatureFileInfo("animation/loading/loading0.png", "animation/loading/loading0.plist", "animation/loading/loading.ExportJson");
+    local armature = ccs.Armature:create("loading")
+    armature:setPosition(display.center)
+    self:addChild(armature)
+    armature:getAnimation():playWithIndex(0)
+    armature:getAnimation():setSpeedScale(0.5)
 end
 
 function LoadingScene:onEnter()
+    print("==> LoadingScene:onEnter")
 end
 
 function LoadingScene:onExit()
+    print("==> LoadingScene:onExit")
+end
+
+function LoadingScene:onEnterTransitionFinish()
+end
+
+function LoadingScene:onExitTransitionStart()
+end
+
+function LoadingScene:onCleanup()
 end
 
 return LoadingScene

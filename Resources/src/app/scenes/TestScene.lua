@@ -1,9 +1,18 @@
-local TestScene = class("TestScene", function()
-    return display.newScene("TestScene")
-end)
+local BaseScene = require "app.scenes.BaseScene"
+
+local TestScene = class("TestScene", BaseScene)
 
 function TestScene:ctor()
+    -- 父类方法实现
+    if self.super then
+        self.super.ctor(self)
+    end
+    -- 自己方法实现
+    self:createScene()
 
+end
+
+function TestScene:createScene( ... )
     -- get windows size.
     local winSize = cc.Director:getInstance():getVisibleSize()
 
@@ -35,10 +44,29 @@ function TestScene:TouchDownAction()
     cc.Director:getInstance():endToLua()
 end  
 
-function TestScene:onEnter()
-end
+-- override me for onEnter()
+-- function TestScene:onEnter()
+--     print("==> TestScene:onEnter")
+-- end
 
-function TestScene:onExit()
-end
+-- override me for onExit()
+-- function TestScene:onExit()
+--     print("==> TestScene:onExit")
+-- end
+
+-- override me for onEnterTransitionFinish()
+-- function TestScene:onEnterTransitionFinish()
+--     print("==> TestScene:onEnterTransitionFinish")
+-- end
+
+-- override me for onExitTransitionStart()
+-- function TestScene:onExitTransitionStart()
+--     print("==> TestScene:onExitTransitionStart")
+-- end
+
+-- override me for onCleanup()
+-- function TestScene:onCleanup()
+--     print("==> TestScene:onCleanup")
+-- end
 
 return TestScene

@@ -6,8 +6,8 @@ function MyApp:ctor()
 end
 
 function MyApp:run()
-    self:enterScene("TestScene")
-    -- self:enterScene("MainScene")
+    -- self:enterScene("TestScene")
+    self:enterScene("LoadingScene")
 end
 
 return MyApp
