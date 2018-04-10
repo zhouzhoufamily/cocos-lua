@@ -145,6 +145,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 	FileUtils::getInstance()->addSearchPath("src");//lua code
 	FileUtils::getInstance()->addSearchPath("res");//resources
+	FileUtils::getInstance()->addSearchPath("res/images");//images
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID ||CC_TARGET_PLATFORM == CC_PLATFORM_IOS )
 	//lua_getglobal(L, "_G");
