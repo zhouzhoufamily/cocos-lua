@@ -8,7 +8,8 @@ end
 function MyApp:run()
     -- self:enterScene("TestScene")
     -- self:enterScene("LoadingScene")
-    self:enterScene("LoginScene")
+    -- self:enterScene("LoginScene")
+    self:enterScene("ChatScene")
     
 end
 
