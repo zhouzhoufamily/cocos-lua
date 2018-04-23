@@ -219,7 +219,7 @@ function Pomelo:_send(packet)
 end
 
 function Pomelo:heartbeat(data)
---    printf("Pomelo:heartbeat(data)")
+    printf("Pomelo:heartbeat(data)")
      
     if self.heartbeatInterval==0 then
         -- no heartbeat
@@ -241,8 +241,8 @@ function Pomelo:heartbeat(data)
         function() 
             self:_send(obj)
           
---            self.nextHeartbeatTimeout = os.time() + self.heartbeatTimeout
---            self.heartbeatTimeoutId = self:_setTimeout(handler(self,self.heartbeatTimeoutCb),self.heartbeatTimeout)
+            self.nextHeartbeatTimeout = os.time() + self.heartbeatTimeout
+            self.heartbeatTimeoutId = self:_setTimeout(handler(self,self.heartbeatTimeoutCb),self.heartbeatTimeout)
        
             self:_clearTimeout(self.heartbeatId)
             self.heartbeatId = nil
@@ -256,7 +256,7 @@ function Pomelo:heartbeatTimeoutCb()
         self.heartbeatTimeoutId = self:_setTimeout(handler(self,self.heartbeatTimeoutCb),gap)
     else 
         self:emit('heartbeat timeout')
---        printf('heartbeat timeout')
+        printf('heartbeat timeout')
         self:disconnect()
     end
 end
@@ -295,8 +295,11 @@ function Pomelo:_onData(data)
             return
         end
     end
+    print("===test===001", data)
     msg.body = self:_deCompose(msg)
+    print("===test===002", data)
     self:_processMessage(msg)
+    print("===test===003", data)
 end
 
 function Pomelo:_onKick(data) 
@@ -321,17 +324,17 @@ function Pomelo:_deCompose(msg)
     route = msg.route
   end
   
-  if protos[route] then
-      return Protobuf.decode(route,msg.body)
-  else 
-      return json.decode(Protocol.strdecode(msg.body))
-  end
+    if protos[route] then
+        return Protobuf.decode(route,msg.body)
+    else
+        return json.decode(Protocol.strdecode(msg.body))
+    end
 
   return msg
 end
 
 function Pomelo:_handshakeInit(data) 
---    printf("Pomelo:_handshakeInit(data=)",json.encode(data))
+    printf("Pomelo:_handshakeInit(data=)",json.encode(data))
     if data.sys and data.sys.heartbeat then
         self.heartbeatInterval = data.sys.heartbeat         -- heartbeat interval
         self.heartbeatTimeout = self.heartbeatInterval * 2  -- max heartbeat timeout
@@ -396,7 +399,7 @@ function Pomelo:_clearTimeout(fn)
             self._schedulerNode:stopAllActions()
             self._schedulerNode = nil
         end
-        -- scheduler.unscheduleGlobal(fn)
+        scheduler.unscheduleGlobal(fn)
     end
 end
 

@@ -9,7 +9,9 @@ function MyApp:run()
     -- self:enterScene("TestScene")
     -- self:enterScene("LoadingScene")
     -- self:enterScene("LoginScene")
-    self:enterScene("ChatScene")
+    -- self:enterScene("ChatScene")
+    -- self:enterScene("Base3DScene")
+    self:enterScene("CameraScene")
     
 end
 

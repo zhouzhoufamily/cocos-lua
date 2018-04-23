@@ -50,8 +50,8 @@ function LoginScene:createScene( ... )
 end
 
 function LoginScene:goToMainScene()
-    AppBase.new():enterScene("TestScene")
-    -- SceneManager:replaceScene("TestScene")
+    AppBase.new():enterScene("ChatScene")
+    -- SceneManager:replaceScene("ChatScene")
 end
 
 function LoginScene:OnBackPressed()

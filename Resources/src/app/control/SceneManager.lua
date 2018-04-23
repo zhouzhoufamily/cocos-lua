@@ -20,15 +20,15 @@ end
 
 setfenv(1, M)
 
-function pushScene( ... )
+function M.pushScene( ... )
     -- body
 end
 
-function popScene( ... )
+function M.popScene( ... )
     -- body
 end
 
-function replaceScene( sceneName, ... )
+function M.replaceScene( sceneName, ... )
     local isSuccess = false
     for _, root in ipairs(configs_.scenesRoot) do
         local scenePackageName = string.format("%s.%s", root, sceneName)

@@ -53,7 +53,22 @@ function ChatScene:initView()
     loginMenuItem:setPosition( cc.p( winSize.width / 2, winSize.height / 2 + 50) )
     sendMenuItem:setPosition( cc.p( winSize.width / 2, winSize.height / 2 - 50) )
     self:addChild(menu, 0)
+
+    -- add close button.
+    local btnN = cc.Scale9Sprite:create("CloseNormal.png")
+    local btnS = cc.Scale9Sprite:create("CloseSelected.png")
+    local controlButton = cc.ControlButton:create(btnN)
+    local menuSize = controlButton:getContentSize()
+    controlButton:setBackgroundSpriteForState(btnS, cc.CONTROL_STATE_HIGH_LIGHTED)
+    controlButton:setPosition(winSize.width - menuSize.width - 5, winSize.height - menuSize.height - 5)
+    self:addChild(controlButton)
+    controlButton:registerControlEventHandler(self.close, cc.CONTROL_EVENTTYPE_TOUCH_DOWN)
+
 end
+
+function ChatScene:close()
+    cc.Director:getInstance():endToLua()
+end  
 
 function ChatScene:initNet()
     pomelo:on("onChat",handler(self,self.onChat))
