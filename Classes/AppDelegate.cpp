@@ -134,29 +134,31 @@ static int register_all_packages()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-	LuaEngine* engine = LuaEngine::getInstance();
+	// register lua module
+	auto engine = LuaEngine::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
-	LuaStack* stack = engine->getLuaStack();
-	lua_State* L = stack->getLuaState();
-
+	lua_State* L = engine->getLuaStack()->getLuaState();
 	lua_module_register(L);
 
 	register_all_packages();
 
-	FileUtils::getInstance()->addSearchPath("src");//lua code
-	FileUtils::getInstance()->addSearchPath("res");//resources
-	FileUtils::getInstance()->addSearchPath("res/images");//images
+	LuaStack* stack = engine->getLuaStack();
+	stack->setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID ||CC_TARGET_PLATFORM == CC_PLATFORM_IOS )
-	//lua_getglobal(L, "_G");
-	//if (lua_istable(L, -1))//stack:...,_G,
-	//{
-	//	register_all_cocos2dx_controller(L);
-	//	register_all_cocos2dx_controller_manual(L);
-	//}
-	//lua_pop(L, 1);//statck:...
+	//register custom function
+	//LuaStack* stack = engine->getLuaStack();
+	//register_custom_function(stack->getLuaState());
+
+#if CC_64BITS
+	FileUtils::getInstance()->addSearchPath("src/64bit");
 #endif
-	engine->executeString("require 'src/main.lua'");
+	FileUtils::getInstance()->addSearchPath("src");
+	FileUtils::getInstance()->addSearchPath("res");
+	FileUtils::getInstance()->addSearchPath("res/images");
+	if (engine->executeScriptFile("main.lua"))
+	{
+		return false;
+	}
 
 	return true;
 }
