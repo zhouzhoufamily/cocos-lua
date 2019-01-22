@@ -171,12 +171,6 @@ function CameraScene:create3DWorld()
         sp1:runAction(cc.RepeatForever:create(seq))
     end
 
-    local ps = cc.PUParticleSystem3D:create("particles/canOfWorms.pu")
-    ps:setPosition3D(cc.vec3(winSize.width/2, winSize.height/2, 0))
-    ps:setScale(1, 0.2)
-    ps:startParticleSystem()
-    self:addChild(ps)
-
 end
 
 function CameraScene:createUI()  

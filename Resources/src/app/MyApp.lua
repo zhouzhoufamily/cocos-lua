@@ -12,6 +12,7 @@ function MyApp:run()
     -- self:enterScene("ChatScene")
     -- self:enterScene("Base3DScene")
     self:enterScene("CameraScene")
+
     
 end
 
